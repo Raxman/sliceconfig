@@ -3,11 +3,11 @@
 
 
 # sliceconfig dir
-sliceconfig=`dirname $0`/../..
-sliceconfig=`readlink -f $sliceconfig`
+sliceconfig=`cd ..; cd ..; pwd`
+path_secint="$path_parent/security/interactive"
+. /$path_secint/functions
 
-
-for user in $( sh $sliceconfig/security/interactive/list_unlocked_users.sh ); do
+for user in $( user_unlock ); do
   if [ ${user} == "root" ]; then
     HOMEDIR="/root"
   else
