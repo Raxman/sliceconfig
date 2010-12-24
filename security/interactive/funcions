@@ -1,0 +1,29 @@
+#!/bin/bash
+
+user_all() {
+cat /etc/shadow | awk -F: '{print $1}'
+}
+
+user_lock() {
+egrep '*:\*|:!' /etc/shadow | awk -F: '{print $1}'
+}
+
+user_unlock() {
+egrep -v '*:\*|:!' /etc/shadow | awk -F: '{print $1}'
+}
+
+port_open() {
+netstat -nl | grep -i tcp
+}
+
+file_setuid() {
+find / -path /proc -prune -o -type f -perm +6000 -ls
+}
+
+file_userless() {
+find / -path /proc -prune -o -nouser -o -nogroup
+}
+
+if [ $1 ]; then
+$1
+fi
